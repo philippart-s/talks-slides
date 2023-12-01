@@ -29,7 +29,6 @@ h2 {
   font-family: Amatic;
 }
 
-
 .title {
   justify-content: end;
 }
@@ -96,7 +95,6 @@ h2 {
   color: black;
 }
 
-
 .ovhcloud-world {
   background-image: url(images/ovhcloud-world.png);
   background-size: 95%;
@@ -149,7 +147,7 @@ h2 {
 /****
  * Global styles
  ****/
- .img-right {
+.img-right {
   position: absolute;
   right: 20px;
 }
@@ -166,4 +164,11 @@ h2 {
   bottom: 30px;
   right: 2px;
   font-size: medium;
+}
+
+/** gestion des couleurs du footer **/
+.sd-slide.love.sd-current ~ .footer,
+.sd-slide.lego.sd-current ~ .footer,
+.sd-slide.demos.sd-current ~ .footer {
+  color: #fff;
 }

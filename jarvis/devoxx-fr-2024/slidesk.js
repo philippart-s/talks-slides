@@ -5,7 +5,7 @@
       animationTimer: 300,
       onSlideChange: function() {window.slidesk.prepareSteps();;},
       env: {"PLUGINS":"steps, gamepad","WIDTH":"1920"},
-      cwd: '/Users/stef/Talks/jarvis-slides/',
+      cwd: '/Users/sphilipp/Documents/Talks/jarvis-slides/',
       lastAction: ""
     };
     

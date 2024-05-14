@@ -3,7 +3,7 @@
       currentSlide: 0,
       slides: [],
       animationTimer: 300,
-      onSlideChange: function() {window.slidesk.prepareSteps();;window.slidesk.progressActive();;window.slidesk.animateElements();;window.slidesk.sbs();;},
+      onSlideChange: function() {window.slidesk.prepareSteps();;window.slidesk.progressActive();;;window.slidesk.sbs();;window.slidesk.animateElements();},
       env: {"PLUGINS":"steps, progress","WIDTH":"1920"},
       cwd: '/Users/sphilipp/Documents/Talks/ai-in-few-minutes-slides/',
       lastAction: ""

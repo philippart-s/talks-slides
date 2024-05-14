@@ -1,0 +1,275 @@
+:root {
+  --sd-heading1-size: 6.5vw;
+  --sd-heading1-line-height: 1;
+  --sd-heading2-size: 5vw;
+  --sd-heading2-line-height: 1;
+  --sd-text-line-height: 1.2;
+  --sd-background-color: #fff;
+  --sd-heading-color: #000;
+  --sd-text-color: #000;
+  --sd-primary-color: #0097a7;
+  --sd-caption-font-size: 2em;
+}
+
+@font-face {
+  font-family: Amatic;
+  src: url(fonts/Amatic_SC/AmaticSC-Bold.ttf);
+}
+
+@font-face {
+  font-family: Montserrat;
+  src: url(fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+}
+
+* {
+  font-family: Montserrat;
+}
+
+h1,
+h2 {
+  font-family: Amatic;
+}
+
+.title {
+  justify-content: end;
+}
+
+.slide-text {
+  display: block;
+}
+
+.slide-text h2 {
+  text-align: left;
+  margin-bottom: 5rem;
+}
+
+.title-center h2 {
+  text-align: center;
+}
+
+.slide-text ul {
+  margin: 2rem;
+  width: 62%;
+}
+
+.center-list ul {
+  width: 100%;
+}
+
+.full-page-list ul {
+  width: 95%;
+}
+
+.slide-text ul li {
+  list-style: none;
+  line-height: 1.6em;
+}
+
+.slide-text .twitter {
+  color: var(--sd-primary-color);
+}
+
+.slide-text p {
+  text-align: left;
+  line-height: 1.6em;
+}
+
+.alice-burrow{
+  background-image: url(images/alice-burrow.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.alice-burrow h2 {
+  color: #fff;
+  text-align: center;
+}
+
+.data{
+  background-image: url(images/data/data.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.data h2 {
+  text-align: center;
+  backdrop-filter: blur(10px);
+  background-color: rgb(255 255 255 / 30%);
+}
+
+.app{
+  background-image: url(images/app/app.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.app h2 {
+  text-align: center;
+  backdrop-filter: blur(10px);
+  background-color: rgb(255 255 255 / 30%);
+}
+
+.model {
+  background-image: url(images/model/model.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.model h2 {
+  text-align: center;
+}
+
+
+.material {
+  background-image: url(images/material/material.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.material h2 {
+  color: white;
+  text-align: center;
+}
+
+figcaption {
+  position: absolute;
+  top:100%;
+  font-family: Amatic;
+}
+
+.jobs {
+  background-image: url(images/jobs/jobs.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.jobs h2 {
+  color: white;
+  text-align: center;
+}
+
+.caution {
+  background-image: url(images/caution/caution.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.caution h2 {
+  color: white;
+  text-align: center;
+}
+
+.thanks h2 {
+  font-size: 4em;
+}
+/****
+ * CSS Styles for _demos.sdf slide
+ ****/
+.demos {
+  background-image: url(images/demos.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.demos h2 {
+  color: #000;
+}
+
+.demo-image-author a {
+  color: black;
+}
+
+/****
+ * CSS Styles for _picocli-advanced.sdf slide
+ ****/
+.pico-advanced a {
+  color: black;
+}
+
+.ovhcloud-world {
+  background-image: url(images/ovhcloud/ovhcloud-world.png);
+  background-size: 95%;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: block;
+}
+
+.ovhcloud-world h2 {
+  color: #000;
+  text-align: left;
+}
+
+.graal h2 {
+  color: #000;
+  vertical-align: middle;
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  font-size: 300%;
+  backdrop-filter: blur(5px) saturate(80%);
+}
+
+/****
+ * CSS Styles for _merciii.sdf slide
+ ****/
+ .love {
+  background-image: url(images/love.jpg);
+  background-size: contain;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  display: block;
+ }
+
+.love h2 {
+  color: #fff;
+  position: relative;
+  top: 45%;
+  left: 25%;
+  font-size: 300%;
+}
+
+.love-image-author a {
+  color: #fff;
+}
+
+/****
+ * CSS Styles for _CLI.sdf slide
+ ****/
+.cli-image-author-ubuntu a {
+  color: #fff;
+}
+
+.cli-image-author-language a {
+  color: black;
+}
+
+/****
+ * Global styles
+ ****/
+.img-right {
+  position: absolute;
+  right: 20px;
+}
+
+.img-right-author {
+  position: absolute;
+  font-size: small;
+  bottom: 1%;
+  right: 1%;
+}
+
+.full-image-author {
+  position: absolute;
+  bottom: 30px;
+  right: 2px;
+  font-size: medium;
+}
+
+/** gestion des couleurs du footer **/
+.sd-slide.alice-burrow.sd-current ~ .footer,
+.sd-slide.material.sd-current ~ .footer,
+.sd-slide.app.sd-current ~ .footer,
+.sd-slide.jobs.sd-current ~ .footer,
+.sd-slide.caution.sd-current ~ .footer {
+  color: #fff;
+}

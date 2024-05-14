@@ -8,7 +8,7 @@
       cwd: '/Users/sphilipp/Documents/Talks/ai-in-few-minutes-slides/',
       lastAction: ""
     };
-    
+    window.slidesk.save = true;
     window.slidesk.sendMessage = (payload) => {
   window.slidesk.waitForSocketConnection(payload);
 };
@@ -197,7 +197,7 @@ window.onload = () => {
 };
 
 document.addEventListener("keydown", (e) => {
-  if (window.location.hostname === "localhost") {
+  if (window.location.hostname === "localhost" || window.slidesk.save) {
     if (e.key === "ArrowLeft") {
       window.slidesk.previous();
     } else if (e.key === "ArrowRight") {

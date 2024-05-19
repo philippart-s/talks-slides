@@ -1,6 +1,6 @@
 # Here you will find all my slides as code for my conferences
 
-## AI in fex minutes
+## AI in few minutes
 
   - [CNCF Lorient 2024](./ai-in-few-minutes/cncf-lorient-2024/)
 

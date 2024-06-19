@@ -6,6 +6,7 @@
 
 ## Jarvis
 
+  - [Voxxed Days Lux 2024](./jarvis/voxxed-days-lux-2024/)
   - [Devoxx FR 2024](./jarvis/devoxx-fr-2024/)
   - [Snowcamp 2024](./jarvis/snowcamp-2024/)
   - [OSXP 2023 ](./jarvis/osxp-2023/)

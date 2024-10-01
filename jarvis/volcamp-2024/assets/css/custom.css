@@ -92,6 +92,23 @@ h2 {
 }
 
 /****
+ * CSS Styles for quarkus.sdf slide
+ ****/
+ .demos {
+  background-image: url(../images/demos.jpg);
+  background-size: cover;
+  display: block;
+}
+
+.demos h2 {
+  color: #000;
+}
+
+.demo-image-author a {
+  color: #fff;
+}
+
+/****
  * CSS Styles for _picocli-advanced.sdf slide
  ****/
 .pico-advanced a {

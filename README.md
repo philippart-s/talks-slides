@@ -1,5 +1,9 @@
 # Here you will find all my slides as code for my conferences
 
+## AI as lib
+
+  - [Apside Camp 2024](./ai-as-lib/apside-camp-2024/)
+
 ## AI in few minutes
 
   - [CNCF Lorient 2024](./ai-in-few-minutes/cncf-lorient-2024/)

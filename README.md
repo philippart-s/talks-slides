@@ -3,6 +3,7 @@
 ## AI as lib
 
   - [Apside Camp 2024](./ai-as-lib/apside-camp-2024/)
+  - [INNOVTECH CGI 2024](./ai-as-lib/cgi-2024/)
 
 ## AI in few minutes
 

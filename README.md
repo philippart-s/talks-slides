@@ -11,6 +11,8 @@
 
 ## Jarvis
 
+  - [Bordeaux JUG 2024](./jarvis/bordeaux-jug-2024/)
+  - [Volcamp 2024](./jarvis/volcamp-2024/)
   - [Volcamp 2024](./jarvis/volcamp-2024/)
   - [Riviera Dev 2024](./jarvis/riviera-dev-2024/)
   - [Voxxed Days Lux 2024](./jarvis/voxxed-days-lux-2024/)

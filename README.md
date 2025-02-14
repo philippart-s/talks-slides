@@ -2,7 +2,7 @@
 
 ## AI as lib
 
-  - [Inetum 2025](./ai-as-lib/inetum-2025/)
+  - [Confoo 2025](./ai-as-lib/confoo-2025/)
   - [Apside Camp 2024](./ai-as-lib/apside-camp-2024/)
   - [INNOVTECH CGI 2024](./ai-as-lib/cgi-2024/)
 

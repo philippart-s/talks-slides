@@ -3,7 +3,7 @@
       currentSlide: 0,
       slides: [],
       animationTimer: 300,
-      onSlideChange: function() {window.slidesk.prepareSteps();;window.slidesk.progressActive();;;window.slidesk.sbs();;window.slidesk.animateElements();},
+      onSlideChange: function() {window.slidesk.prepareSteps();;window.slidesk.progressActive();;window.slidesk.sbs();;;window.slidesk.animateElements();},
       env: {"PLUGINS":"steps,progress","WIDTH":"1920"},
       cwd: '/Users/sphilipp/dev/talks/ai-as-lib-slides/',
       lastAction: ""

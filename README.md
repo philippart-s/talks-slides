@@ -11,7 +11,7 @@
   - [CNCF Lorient 2024](./ai-in-few-minutes/cncf-lorient-2024/)
 
 ## Jarvis
-  - [Programmez Magazine 2025](./jarvis/prog-mag-2025/)
+  - [Programmez Magazine 2025](./jarvis/programmez-2025/)
   - [Confoo 2025](./jarvis/confoo-2025/)
   - [Bordeaux JUG 2024](./jarvis/bordeaux-jug-2024/)
   - [Volcamp 2024](./jarvis/volcamp-2024/)

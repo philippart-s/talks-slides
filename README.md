@@ -11,6 +11,14 @@
 
   - [CNCF Lorient 2024](./ai-in-few-minutes/cncf-lorient-2024/)
 
+## Java full stack
+
+  - [Devoxx France 2025](./java-full-stack/devoxx-fr-2025/)
+
+## JBang
+
+  - [Devoxx France 2025](./jbang/devoxx-fr-2025/)
+
 ## Jarvis
   - [Programmez Magazine 2025](./jarvis/programmez-2025/)
   - [Confoo 2025](./jarvis/confoo-2025/)

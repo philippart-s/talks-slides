@@ -1,0 +1,24 @@
+## 🖐 Who knows what C.L.I. means? 🖐
+
+## 🖥️ Command Line Interface .[slide-text steps]
+
+!image(assets/images/CLI/ubuntu.png, ubuntu,,, float: right; margin-top: -18vh;)
+
+<div class="image-author-black img-right-author"><a href="https://unsplash.com/fr/@6heinz3r">Gabriel Heinzer</a></div>
+
+- ✨ Hype with old
+- 🗓️ 60s - 70s date
+- 🧩 Back in fashion in the 2000s with advanced frameworks
+- ⚡️ Allows actions to be automated in a terminal
+- 🤝 Simplify access to APIs (often via an SDK)
+
+/*
+Who knows what CLI means?
+Yeah a lot of you know what CLI means, it's command line interface, it's hype making with the old stuff, it's 60s and 70s, we had passive terminals, we had mainframes, we had to talk to the mainframes, and so we started creating things through terminals to talk to the mainframes.
+
+And then in the 2000s we had the emergence of frameworks that were a bit more or less complex to manipulate more or less complex to initialize and so the CLIs allowed to automate actions to manage these frameworks or to bootstrap projects.
+
+And also it allowed us to dialog with APIs you know everything is API now doing CURL it's nice but it's a bit tedious so we put an SDK often between the two and then we make a CLI that allows to dialog with APIs.
+
+There are known CLI like dockers or kubectl, and often it's very natural language oriented, and you describe what you want to do.
+*/

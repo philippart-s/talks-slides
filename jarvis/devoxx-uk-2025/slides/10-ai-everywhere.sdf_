@@ -1,0 +1,15 @@
+##  .[buzz-ai]
+
+<div class="full-image-author love-image-author"><a href="https://www.pixar.com/">Pixar Studio</a></div>
+
+/*
+
+But we are in 2025, and I'm giving you a talk where I don't talk about AI and I'm not credible so what I propose you as time remains we're going to add AI because in addition it's called Jarvis.
+
+I'm going to use something that's called LangChain4J.
+Do you know LangChain?
+Ok LangChain4J is the same thing but in Java so for those who know LangChain bah it's the same thing but in Java.
+
+Ok so basically this is a framework that will allow me to consume API that expose mainly LLMs (like Open AI for example) but without bothering me to know how it works behind.
+
+*/

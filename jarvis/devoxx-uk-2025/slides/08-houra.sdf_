@@ -1,0 +1,13 @@
+## 🎉 We have created our CLI!!! 😎
+
+/*
+
+Ok, wonderful, we have created our CLI!!! 
+And there are 10 minutes left.
+
+
+Maybe so you'll think I'm a bit of an imposter it's a simple script not well written and there is a JVM installed to distribute the CLI.
+
+You're right, what I'm actually proposing to you is to make a real executable now that's where we have GraalVM coming into play.
+
+*/

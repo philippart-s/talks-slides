@@ -1,0 +1,18 @@
+## ⚗️ Which technology should I use? .[slide-text steps]
+
+!image(assets/images/CLI/php.png, php,,, float: right; margin-top: -18vh;)
+
+<div class="cli-image-author-language img-right-author"><a href="https://unsplash.com/fr/@kobuagency"> KOBU Agency</a></div>
+
+- 👊 All!
+- 🐍 C, Python, Perl …
+- 🦀 These days: Rust or Go
+
+/*
+
+To create a CLI, you have to choose the technology. 
+I want to say  that you can use any technology you are comfortable with as long as it can be run in a terminal.
+
+Historically we had languages like C, Pearl, Python that were very well represented and then for a few years now we've had Rust and Go already because these languages are relatively fashionable but we must also recognize that they have a tooling that is very well adapted to do CLI.
+
+*/

@@ -20,6 +20,8 @@
   - [Devoxx France 2025](./jbang/devoxx-fr-2025/)
 
 ## Jarvis
+
+  - [Devoxx UK 2025](./jarvis/devoxx-uk-2025/)
   - [Programmez Magazine 2025](./jarvis/programmez-2025/)
   - [Confoo 2025](./jarvis/confoo-2025/)
   - [Bordeaux JUG 2024](./jarvis/bordeaux-jug-2024/)

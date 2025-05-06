@@ -1,0 +1,11 @@
+## GraalVM !! .[graal]
+
+
+<img src="assets/images/aventurier.jfif"  alt="" class=""/>
+
+/* 
+
+GraalVM basically it's Oracle that created a VM, a JDK with tools to be able to generate binaries from Java classes.
+I often say when we mix Quarkus that already starts very quickly and GraalVM you have the best of both worlds.
+
+*/

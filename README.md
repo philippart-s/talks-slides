@@ -17,6 +17,7 @@
 
 ## JBang
 
+  - [DevQuest Niort 2025](./jbang/devquest-niort-2025/)
   - [Devoxx France 2025](./jbang/devoxx-fr-2025/)
 
 ## Jarvis

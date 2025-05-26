@@ -1,0 +1,24 @@
+## ⚡️ Exécution du code avec Maven .[slide-text steps]
+
+<ul>
+<li>
+
+```
+$ mvn compile
+$ java fr.wilda.App
+
+Hello World!
+```
+</li>
+<li>
+
+```bash
+$ mvn -q -e exec:java \
+      -Dexec.useMavenLogger=false \
+      -Dexec.quietLogs=true \
+      -Dexec.mainClass="fr.wilda.App"
+
+Hello World!
+```
+</li>
+</ul>

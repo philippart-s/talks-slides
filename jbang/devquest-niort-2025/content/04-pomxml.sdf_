@@ -1,0 +1,20 @@
+## 🍎 Et un pom.xml !!! .[slide-text steps]
+
+<div style="margin-left: 20%;width:80%; font-size: 0.8em; margin-top: -2%">
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>fr.wilda</groupId>
+  <artifactId>maven-demo-create</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  ..
+</project>  
+```
+</div>
+
+- 📄 90 lignes de code
+- ⬇️ 2 dépendances
+- 🧰 9 plugins

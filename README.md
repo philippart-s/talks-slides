@@ -2,6 +2,7 @@
 
 ## AI as lib
 
+  - [France DevOps 2025](./ai-as-lib/france-devops-2025/)
   - [Fac Tours 2025](./ai-as-lib/fac-tours-2025/)
   - [Confoo 2025](./ai-as-lib/confoo-2025/)
   - [Apside Camp 2024](./ai-as-lib/apside-camp-2024/)

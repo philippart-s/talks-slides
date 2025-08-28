@@ -22,7 +22,7 @@
   - [Devoxx France 2025](./jbang/devoxx-fr-2025/)
 
 ## Jarvis
-  - [JUG SUmmer Camp 2025](./jarvis/jsc-2025/)
+  - [JUG Summer Camp 2025](./jarvis/jsc-2025/)
   - [Lava JUG 2025](./jarvis/lavajug-2025/)
   - [Devoxx UK 2025](./jarvis/devoxx-uk-2025/)
   - [Programmez Magazine 2025](./jarvis/programmez-2025/)

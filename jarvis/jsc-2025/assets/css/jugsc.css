@@ -2,12 +2,14 @@
 CSS styles for Conference
 */
 .main-background {
-  background-image: url(../images/conf-background.png);
-  background-size: cover;
-  display: block;
+  background: url(../images/conf-background.png) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: contain;
 }
 
 .main-background h1 {
   position: relative;
-  top: 35%;
+  top: -3%;
 }

@@ -145,22 +145,45 @@ h2 {
 /****
  * CSS Styles for _merciii.sdf slide
  ****/
- .love {
-  background-image: url(../images/love.jpg);
+.love {
+  background: url(../images/love.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
   background-size: cover;
-  display: block;
 }
 
-.love h2 {
-  color: #fff;
-  position: relative;
-  top: 40%;
-  left: 25%;
-  font-size: 300%;
+.ai-everywhere {
+  background: url(../images/buzz-ai.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
-.love-image-author a {
-  color: #fff;
+.java {
+  background: url(../images/lego.jpeg) no-repeat center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.demos {
+  background: url(../images/demos.jpg) no-repeat center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.ovhcloud {
+  background: url(../images/ovhcloud-world.png) no-repeat center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: contain;
+  
 }
 
 /****

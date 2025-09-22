@@ -18,6 +18,7 @@
 
 ## JBang
 
+  - [DevFest Nantes 2025](https://docs.google.com/presentation/d/e/2PACX-1vRF50mgvW6KzZf6lspATsmJRfTU79-CdlyDO8JP23f6ZldfvSGCkxe7wRwy9WaQMfD3EVqza0q5ukkB/pub)
   - [DevQuest Niort 2025](./jbang/devquest-niort-2025/)
   - [Devoxx France 2025](./jbang/devoxx-fr-2025/)
 

@@ -1,0 +1,13 @@
+/*
+CSS styles for Conference
+*/
+.main-background {
+  background-image: url(../images/conf-background.png);
+  background-size: cover;
+  display: block;
+}
+
+.main-background h1 {
+  position: relative;
+  top: 35%;
+}

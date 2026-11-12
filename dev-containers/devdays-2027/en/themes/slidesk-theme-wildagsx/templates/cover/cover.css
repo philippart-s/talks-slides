@@ -1,0 +1,27 @@
+/* Template cover : couverture. Usage : README.md, section « Couverture ».
+   Titre centré, un peu au-dessus du milieu (--wx-cover-top), puis le logo, puis le texte.
+   Blocs optionnels : [[bg]] (visuel de fond), [[logo]] (logo de la conférence, centré, en grand).
+   Sans bloc : fond blanc. Modificateur dark : texte blanc (fond sombre). */
+.sd-slide:has(.cover-body) { display: block; }
+
+.cover-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+.cover-bg .sd-img, .cover-bg img { display: none; }
+
+.cover-body {
+  position: absolute; inset: 0 0 calc(var(--wx-footer-bottom) + var(--wx-footer-height)) 0; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 4vh;
+  padding: var(--wx-cover-top) 6vw 0; text-align: center;
+}
+.sd-slide:has(.cover-body) h2 { font-size: var(--wx-cover-title-size); line-height: 1.05; margin: 0; }
+.cover-body p { margin: 0; font-size: var(--wx-cover-text-size); }
+
+/* logo de la conférence : le plus grand possible en gardant la place du titre */
+.cover-logo:not(:has(img)) { display: none; }
+.cover-logo .sd-img { max-width: none; }
+.cover-logo img { max-width: 80vw; max-height: var(--wx-cover-logo-height); width: auto; height: auto; object-fit: contain; }
+
+.sd-slide.dark:has(.cover-body) h2,
+.sd-slide.dark:has(.cover-body) .cover-body { color: var(--wx-color-on-dark); }

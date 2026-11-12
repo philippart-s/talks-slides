@@ -1,5 +1,9 @@
 # Here you will find all my slides as code for my conferences
 
+## Dev containers
+
+  - [DevDays 2027](./dev-containers/devdays-2027/)
+
 ## AI as lib
 
   - [France DevOps 2025](./ai-as-lib/france-devops-2025/)

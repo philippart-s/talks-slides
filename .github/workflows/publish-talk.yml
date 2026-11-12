@@ -1,0 +1,222 @@
+# Publie une édition d'un talk SliDesk dans ce dépôt (GitHub Pages) :
+#   <talk>/<edition>/index.html   page d'accueil (liens vers chaque langue)
+#   <talk>/<edition>/<lang>/      export `slidesk save -l <lang>`
+# et ajoute l'édition à l'index du README.
+#
+# Lancement : onglet Actions de talks-slides → « Publier une édition de talk » → Run workflow.
+# Secret du dépôt : TALKS_PUBLISH_TOKEN (fine-grained token : lecture du dépôt du thème,
+# lecture et écriture sur talks-slides ; lecture du repo du talk s'il est privé).
+name: Publier une édition de talk
+
+on:
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: "Repo du talk (philippart-s/<repo>), ex. dev-containers-talk-slides"
+        type: string
+        required: true
+      talk:
+        description: "Dossier du talk dans talks-slides, ex. dev-containers"
+        type: string
+        required: true
+      talk-title:
+        description: "Titre de la section du talk dans le README, ex. Dev containers"
+        type: string
+        required: true
+      edition:
+        description: "Dossier de l'édition, ex. devdays-2027"
+        type: string
+        required: true
+      edition-label:
+        description: "Libellé de l'édition dans le README, ex. DevDays 2027"
+        type: string
+        required: true
+      langs:
+        description: "Langues à exporter, séparées par des espaces"
+        type: string
+        default: "fr en"
+      slidesk-version:
+        description: "Version de SliDesk (ex. 2.23.1) ou latest"
+        type: string
+        default: "latest"
+      dry-run:
+        description: "Construire seulement (artefact téléchargeable), sans publier"
+        type: boolean
+        default: false
+      overwrite:
+        description: "Remplacer une édition déjà publiée"
+        type: boolean
+        default: false
+
+# une publication à la fois : chacune pousse sur main
+concurrency:
+  group: publish-talk
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      OWNER: philippart-s
+      DECK_DIR: deck                                   # dossier du deck dans le repo du talk
+      THEME_REPO: philippart-s/slidesk-theme-wildagsx  # installé dans <deck>/themes/<nom du dépôt>
+      REPO: ${{ inputs.repo }}
+      TALK: ${{ inputs.talk }}
+      TALK_TITLE: ${{ inputs.talk-title }}
+      EDITION: ${{ inputs.edition }}
+      EDITION_LABEL: ${{ inputs.edition-label }}
+      LANGS: ${{ inputs.langs }}
+      SLIDESK_VERSION: ${{ inputs.slidesk-version }}
+      OUT: ${{ github.workspace }}/out
+    steps:
+      - name: Vérifier les entrées
+        run: |
+          set -euo pipefail
+          slug='^[a-z0-9][a-z0-9._-]*$'
+          [[ "$REPO" =~ $slug ]] || { echo "::error::repo « $REPO » : nom du dépôt seul, sans propriétaire"; exit 1; }
+          [[ "$TALK" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "::error::talk « $TALK » : minuscules, chiffres et tirets"; exit 1; }
+          [[ "$EDITION" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "::error::edition « $EDITION » : minuscules, chiffres et tirets"; exit 1; }
+          for lang in $LANGS; do [[ "$lang" =~ ^[a-z]{2}$ ]] || { echo "::error::langue « $lang » invalide"; exit 1; }; done
+
+      - name: Récupérer le talk
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.OWNER }}/${{ inputs.repo }}
+          token: ${{ secrets.TALKS_PUBLISH_TOKEN }}
+          path: talk
+
+      - name: Installer SliDesk (${{ inputs.slidesk-version }})
+        run: |
+          set -euo pipefail
+          version="$SLIDESK_VERSION"
+          if [ "$version" = "latest" ]; then
+            # la page de la dernière release redirige vers …/releases/tag/<version>
+            version=$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/slidesk/slidesk/releases/latest)
+            version="${version##*/}"
+          fi
+          echo "SLIDESK_RESOLVED=$version" >> "$GITHUB_ENV"
+          echo "SliDesk $version" >> "$GITHUB_STEP_SUMMARY"
+          mkdir -p "$RUNNER_TEMP/slidesk"
+          curl -fsSL "https://github.com/slidesk/slidesk/releases/download/${version}/slidesk_linux-amd.tar.gz" \
+            | tar xz -C "$RUNNER_TEMP/slidesk"
+          mv "$RUNNER_TEMP/slidesk/slidesk_linux-amd" "$RUNNER_TEMP/slidesk/slidesk"
+          chmod +x "$RUNNER_TEMP/slidesk/slidesk"
+          echo "$RUNNER_TEMP/slidesk" >> "$GITHUB_PATH"
+
+      - name: Installer le thème
+        env:
+          TOKEN: ${{ secrets.TALKS_PUBLISH_TOKEN }}
+        run: |
+          set -euo pipefail
+          # équivalent de `slidesk theme install <url>` : clone dans themes/<nom du dépôt>
+          git clone --quiet --depth 1 "https://x-access-token:${TOKEN}@github.com/${THEME_REPO}.git" \
+            "talk/${DECK_DIR}/themes/${THEME_REPO#*/}"
+
+      - name: Exporter chaque langue
+        run: |
+          set -euo pipefail
+          cd "talk/${DECK_DIR}"
+          for lang in $LANGS; do
+            slidesk save -l "$lang" -t "$OUT/$lang" "$PWD"
+          done
+          # une clé de traduction non résolue reste affichée $$clé$$ : on refuse de publier
+          if grep -rlE '\$\$[A-Za-z0-9_]+\$\$' "$OUT" --include=index.html; then
+            echo "::error::clés de traduction non résolues dans l'export"; exit 1
+          fi
+
+      - name: Page d'accueil de l'édition
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import html, os
+          out, langs = os.environ["OUT"], os.environ["LANGS"].split()
+          names = {"fr": "Français", "en": "English"}
+          title = html.escape(f'{os.environ["TALK_TITLE"]} — {os.environ["EDITION_LABEL"]}')
+          links = "\n".join(f'    <li><a href="{l}/">{names.get(l, l)}</a></li>' for l in langs)
+          page = f"""<!doctype html>
+          <html lang="fr">
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="generator" content="SliDesk {html.escape(os.environ["SLIDESK_RESOLVED"])}">
+            <title>{title}</title>
+            <style>
+              body {{ font-family: system-ui, sans-serif; max-width: 40rem; margin: 15vh auto; padding: 0 1.5rem; text-align: center; }}
+              ul {{ list-style: none; padding: 0; display: flex; gap: 1.5rem; justify-content: center; }}
+              a {{ display: block; padding: 1rem 2rem; border: 2px solid #0097a7; border-radius: .5rem; color: #0097a7; text-decoration: none; font-size: 1.3rem; }}
+            </style>
+          </head>
+          <body>
+            <h1>{title}</h1>
+            <ul>
+          {links}
+            </ul>
+          </body>
+          </html>
+          """
+          open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(page)
+          PY
+
+      - name: Artefact de l'export
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.talk }}-${{ inputs.edition }}
+          path: out
+
+      - name: Récupérer talks-slides
+        if: ${{ !inputs.dry-run }}
+        uses: actions/checkout@v4
+        with:
+          # avec le token personnel : un push fait avec GITHUB_TOKEN ne déclencherait pas la reconstruction de GitHub Pages
+          token: ${{ secrets.TALKS_PUBLISH_TOKEN }}
+          path: site
+
+      - name: Publier l'édition
+        if: ${{ !inputs.dry-run }}
+        env:
+          OVERWRITE: ${{ inputs.overwrite }}
+          ACTOR: ${{ github.actor }}
+          ACTOR_ID: ${{ github.actor_id }}
+        run: |
+          set -euo pipefail
+          cd site
+          dest="${TALK}/${EDITION}"
+          if [ -e "$dest" ] && [ "$OVERWRITE" != "true" ]; then
+            echo "::error::$dest existe déjà (relancer avec overwrite pour le remplacer)"; exit 1
+          fi
+          rm -rf "$dest" && mkdir -p "$TALK" && cp -R "$OUT" "$dest"
+          touch .nojekyll
+
+          # index du README : l'édition en tête de la section du talk (section créée si absente)
+          python3 - <<'PY'
+          import os
+          talk, title = os.environ["TALK"], os.environ["TALK_TITLE"]
+          edition, label = os.environ["EDITION"], os.environ["EDITION_LABEL"]
+          entry = f"  - [{label}](./{talk}/{edition}/)"
+          lines = open("README.md", encoding="utf-8").read().split("\n")
+          heading = f"## {title}"
+          if any(f"(./{talk}/{edition}/)" in l for l in lines):
+              pass  # déjà dans l'index (republication avec overwrite)
+          elif heading not in lines:
+              # nouvelle section juste après le titre principal du README
+              first = next(i for i, l in enumerate(lines) if l.startswith("# "))
+              lines[first + 1:first + 1] = ["", heading, "", entry]
+          else:
+              # en tête de la liste de la section existante
+              i = lines.index(heading) + 1
+              while i < len(lines) and lines[i].strip() == "":
+                  i += 1
+              lines.insert(i, entry)
+              if lines[i - 1].strip() != "":
+                  lines.insert(i, "")
+          open("README.md", "w", encoding="utf-8").write("\n".join(lines))
+          PY
+
+          git config user.name "$ACTOR"
+          git config user.email "${ACTOR_ID}+${ACTOR}@users.noreply.github.com"
+          git add -A "$dest" .nojekyll README.md
+          git commit -q -m "feat: 🖼️ ${TALK_TITLE} ${EDITION_LABEL}"
+          git push -q
+          echo "Publié : https://philippart-s.github.io/talks-slides/${dest}/" >> "$GITHUB_STEP_SUMMARY"

@@ -3,43 +3,40 @@
 #   <talk>/<edition>/<lang>/      export `slidesk save -l <lang>`
 # et ajoute l'édition à l'index du README.
 #
-# Workflow réutilisable : appelé depuis le repo d'un talk (voir README, « Publier une édition »).
-# Le repo du talk doit avoir le secret TALKS_PUBLISH_TOKEN (lecture du thème, écriture ici).
+# Lancement : onglet Actions de talks-slides → « Publier une édition de talk » → Run workflow.
+# Secret du dépôt : TALKS_PUBLISH_TOKEN (fine-grained token : lecture du dépôt du thème,
+# lecture et écriture sur talks-slides ; lecture du repo du talk s'il est privé).
 name: Publier une édition de talk
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
+      repo:
+        description: "Repo du talk (philippart-s/<repo>), ex. dev-containers-talk-slides"
+        type: string
+        required: true
       talk:
-        description: "Dossier du talk dans talks-slides (ex. dev-containers)"
+        description: "Dossier du talk dans talks-slides, ex. dev-containers"
         type: string
         required: true
       talk-title:
-        description: "Titre de la section du talk dans le README (ex. Dev containers)"
+        description: "Titre de la section du talk dans le README, ex. Dev containers"
         type: string
         required: true
       edition:
-        description: "Dossier de l'édition (ex. devdays-2027)"
+        description: "Dossier de l'édition, ex. devdays-2027"
         type: string
         required: true
       edition-label:
-        description: "Libellé de l'édition dans le README (ex. DevDays 2027)"
+        description: "Libellé de l'édition dans le README, ex. DevDays 2027"
         type: string
         required: true
       langs:
         description: "Langues à exporter, séparées par des espaces"
         type: string
         default: "fr en"
-      deck-dir:
-        description: "Dossier du deck dans le repo du talk"
-        type: string
-        default: "deck"
-      theme-repo:
-        description: "Dépôt du thème SliDesk, installé dans <deck>/themes/<nom du dépôt>"
-        type: string
-        default: "philippart-s/slidesk-theme-wildagsx"
       slidesk-version:
-        description: "Version de SliDesk (release GitHub, ex. 2.23.1) ; latest par défaut"
+        description: "Version de SliDesk (ex. 2.23.1) ou latest"
         type: string
         default: "latest"
       dry-run:
@@ -50,10 +47,11 @@ on:
         description: "Remplacer une édition déjà publiée"
         type: boolean
         default: false
-    secrets:
-      token:
-        description: "Token : lecture du dépôt du thème, écriture sur talks-slides"
-        required: true
+
+# une publication à la fois : chacune pousse sur main
+concurrency:
+  group: publish-talk
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -61,27 +59,32 @@ jobs:
     permissions:
       contents: read
     env:
+      OWNER: philippart-s
+      DECK_DIR: deck                                   # dossier du deck dans le repo du talk
+      THEME_REPO: philippart-s/slidesk-theme-wildagsx  # installé dans <deck>/themes/<nom du dépôt>
+      REPO: ${{ inputs.repo }}
       TALK: ${{ inputs.talk }}
       TALK_TITLE: ${{ inputs.talk-title }}
       EDITION: ${{ inputs.edition }}
       EDITION_LABEL: ${{ inputs.edition-label }}
       LANGS: ${{ inputs.langs }}
-      DECK_DIR: ${{ inputs.deck-dir }}
-      THEME_REPO: ${{ inputs.theme-repo }}
       SLIDESK_VERSION: ${{ inputs.slidesk-version }}
       OUT: ${{ github.workspace }}/out
     steps:
       - name: Vérifier les entrées
         run: |
           set -euo pipefail
-          slug='^[a-z0-9][a-z0-9-]*$'
-          [[ "$TALK" =~ $slug ]] || { echo "::error::talk « $TALK » : minuscules, chiffres et tirets"; exit 1; }
-          [[ "$EDITION" =~ $slug ]] || { echo "::error::edition « $EDITION » : minuscules, chiffres et tirets"; exit 1; }
+          slug='^[a-z0-9][a-z0-9._-]*$'
+          [[ "$REPO" =~ $slug ]] || { echo "::error::repo « $REPO » : nom du dépôt seul, sans propriétaire"; exit 1; }
+          [[ "$TALK" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "::error::talk « $TALK » : minuscules, chiffres et tirets"; exit 1; }
+          [[ "$EDITION" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "::error::edition « $EDITION » : minuscules, chiffres et tirets"; exit 1; }
           for lang in $LANGS; do [[ "$lang" =~ ^[a-z]{2}$ ]] || { echo "::error::langue « $lang » invalide"; exit 1; }; done
 
       - name: Récupérer le talk
         uses: actions/checkout@v4
         with:
+          repository: ${{ env.OWNER }}/${{ inputs.repo }}
+          token: ${{ secrets.TALKS_PUBLISH_TOKEN }}
           path: talk
 
       - name: Installer SliDesk (${{ inputs.slidesk-version }})
@@ -104,7 +107,7 @@ jobs:
 
       - name: Installer le thème
         env:
-          TOKEN: ${{ secrets.token }}
+          TOKEN: ${{ secrets.TALKS_PUBLISH_TOKEN }}
         run: |
           set -euo pipefail
           # équivalent de `slidesk theme install <url>` : clone dans themes/<nom du dépôt>
@@ -166,8 +169,8 @@ jobs:
         if: ${{ !inputs.dry-run }}
         uses: actions/checkout@v4
         with:
-          repository: philippart-s/talks-slides
-          token: ${{ secrets.token }}
+          # avec le token personnel : un push fait avec GITHUB_TOKEN ne déclencherait pas la reconstruction de GitHub Pages
+          token: ${{ secrets.TALKS_PUBLISH_TOKEN }}
           path: site
 
       - name: Publier l'édition

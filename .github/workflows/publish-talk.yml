@@ -187,7 +187,6 @@ jobs:
             echo "::error::$dest existe déjà (relancer avec overwrite pour le remplacer)"; exit 1
           fi
           rm -rf "$dest" && mkdir -p "$TALK" && cp -R "$OUT" "$dest"
-          touch .nojekyll
 
           # index du README : l'édition en tête de la section du talk (section créée si absente)
           python3 - <<'PY'
@@ -216,7 +215,7 @@ jobs:
 
           git config user.name "$ACTOR"
           git config user.email "${ACTOR_ID}+${ACTOR}@users.noreply.github.com"
-          git add -A "$dest" .nojekyll README.md
+          git add -A "$dest" README.md
           git commit -q -m "feat: 🖼️ ${TALK_TITLE} ${EDITION_LABEL}"
           git push -q
           echo "Publié : https://philippart-s.github.io/talks-slides/${dest}/" >> "$GITHUB_STEP_SUMMARY"

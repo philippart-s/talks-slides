@@ -42,10 +42,11 @@
 
 ## Publish an edition
 
-Each edition of a talk is published here by a GitHub Actions workflow run from the talk repository, not by hand:
+Each edition of a talk is published here by a GitHub Actions workflow, not by hand:
 `<talk>/<edition>/index.html` (links to each language) and `<talk>/<edition>/<lang>/` (`slidesk save -l <lang>` export).
 The workflow also adds the edition at the top of the talk section of this README.
 
-- Reusable workflow: [`.github/workflows/publish-talk.yml`](.github/workflows/publish-talk.yml) (SliDesk version, theme install, one export per language, index page, commit).
-- In the talk repository: a `workflow_dispatch` workflow that calls it, and a `TALKS_PUBLISH_TOKEN` secret (fine-grained token: read on the theme repository, read and write on this one).
+- Run it from this repository: Actions → "Publier une édition de talk" → Run workflow, with the talk repository, the talk folder and title, the edition folder and label (`dry-run` builds a downloadable artifact without publishing).
+- Workflow: [`.github/workflows/publish-talk.yml`](.github/workflows/publish-talk.yml) (latest SliDesk release by default or a given version, theme install, one export per language, index page, commit).
+- Secret of this repository: `TALKS_PUBLISH_TOKEN`, a fine-grained token with read access to the theme repository (and to the talk repository if it is private) and read and write access to this one. Talk repositories need nothing.
 - URL of an edition (the "Slides" QR code of the last slide): `https://philippart-s.github.io/talks-slides/<talk>/<edition>/`.

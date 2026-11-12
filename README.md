@@ -1,5 +1,9 @@
 # Here you will find all my slides as code for my conferences
 
+## Dev containers
+
+  - [Test publish](./dev-containers/test-publish/)
+
 ## AI as lib
 
   - [France DevOps 2025](./ai-as-lib/france-devops-2025/)

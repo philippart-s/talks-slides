@@ -1,0 +1,26 @@
+/* Template photo : intercalaire plein écran, titre sur l'image, crédit en haut à droite.
+   Usage et modificateurs : README.md, section « Intercalaire photo ».
+   dark (footer blanc), light (titre noir), stretch (photo étirée au lieu de rognée),
+   title-right (titre géant à droite), title-left (titre à gauche), title-big (titre géant, position inchangée). */
+.sd-slide:has(.photo-bg) { display: block; }
+
+.photo-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+.photo-bg .sd-img, .photo-bg img { display: none; }
+.stretch .photo-bg { background-size: 100% 100%; }
+
+.sd-slide:has(.photo-bg) h2 {
+  position: absolute; z-index: 1; top: 10%; width: 100%; text-align: center;
+  color: var(--wx-color-on-dark); font-size: var(--wx-photo-title-size); text-shadow: 0 2px 14px rgba(0,0,0,.65);
+}
+.sd-slide.light:has(.photo-bg) h2 { color: var(--wx-color-text); text-shadow: 0 2px 14px rgba(255,255,255,.7); }
+.sd-slide.title-right:has(.photo-bg) h2 { top: 30%; left: 55%; width: auto; text-align: left; font-size: var(--wx-photo-title-big-size); }
+.sd-slide.title-left:has(.photo-bg) h2 { left: 3%; width: auto; text-align: left; }
+.sd-slide.title-big:has(.photo-bg) h2 { font-size: var(--wx-photo-title-big-size); top: 4%; }
+
+.photo-credit { position: absolute; z-index: 1; top: 1.5vh; right: 1.5vw; font-size: 0.6vw; opacity: .85; }
+.photo-credit p { margin: 0; }
+.photo-credit, .photo-credit a { color: var(--wx-color-on-dark); }
+.light .photo-credit, .light .photo-credit a { color: var(--wx-color-text); }

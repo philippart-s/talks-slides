@@ -37,3 +37,15 @@
   - [Devoxx FR 2024](./jarvis/devoxx-fr-2024/)
   - [Snowcamp 2024](./jarvis/snowcamp-2024/)
   - [OSXP 2023 ](./jarvis/osxp-2023/)  
+
+---
+
+## Publish an edition
+
+Each edition of a talk is published here by a GitHub Actions workflow run from the talk repository, not by hand:
+`<talk>/<edition>/index.html` (links to each language) and `<talk>/<edition>/<lang>/` (`slidesk save -l <lang>` export).
+The workflow also adds the edition at the top of the talk section of this README.
+
+- Reusable workflow: [`.github/workflows/publish-talk.yml`](.github/workflows/publish-talk.yml) (SliDesk version, theme install, one export per language, index page, commit).
+- In the talk repository: a `workflow_dispatch` workflow that calls it, and a `TALKS_PUBLISH_TOKEN` secret (fine-grained token: read on the theme repository, read and write on this one).
+- URL of an edition (the "Slides" QR code of the last slide): `https://philippart-s.github.io/talks-slides/<talk>/<edition>/`.

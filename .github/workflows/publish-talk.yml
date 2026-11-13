@@ -81,7 +81,7 @@ jobs:
           for lang in $LANGS; do [[ "$lang" =~ ^[a-z]{2}$ ]] || { echo "::error::langue « $lang » invalide"; exit 1; }; done
 
       - name: Récupérer le talk
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ${{ env.OWNER }}/${{ inputs.repo }}
           token: ${{ secrets.TALKS_PUBLISH_TOKEN }}
@@ -160,14 +160,14 @@ jobs:
           PY
 
       - name: Artefact de l'export
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ inputs.talk }}-${{ inputs.edition }}
           path: out
 
       - name: Récupérer talks-slides
         if: ${{ !inputs.dry-run }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # avec le token personnel : un push fait avec GITHUB_TOKEN ne déclencherait pas la reconstruction de GitHub Pages
           token: ${{ secrets.TALKS_PUBLISH_TOKEN }}

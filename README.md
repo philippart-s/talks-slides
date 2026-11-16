@@ -2,6 +2,7 @@
 
 ## Dev containers
 
+  - [DevDays 2026](./dev-containers/devdays-2026/)
   - [DevDays 2027](./dev-containers/devdays-2027/)
 
 ## AI as lib

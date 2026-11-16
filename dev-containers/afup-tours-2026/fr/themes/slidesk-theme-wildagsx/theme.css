@@ -1,0 +1,182 @@
+/* =====================================================================
+   Thème SliDesk « wildagsx » — gabarit commun à tous les talks.
+   Mode d'emploi et personnalisation : README.md.
+   Ne rien mettre ici qui soit propre à un talk.
+   ===================================================================== */
+
+/* ---- 1. Variables ------------------------------------------------------
+   --wx-* : variables du gabarit, seul endroit où changer le look.
+   --sd-* : variables de SliDesk, dérivées des --wx-*.
+   Pour surcharger depuis un deck : `:root:root { --wx-… }` (voir README). */
+:root {
+  /* polices */
+  --wx-font-title: Amatic, cursive;
+  --wx-font-text: Montserrat, sans-serif;
+
+  /* couleurs */
+  --wx-color-bg: #fff;
+  --wx-color-text: #000;
+  --wx-color-on-dark: #fff;          /* texte sur une slide `dark` */
+  --wx-color-primary: #0097a7;       /* liens, @wildagsx */
+  --wx-color-muted: #666;            /* textes secondaires */
+  --wx-color-surface: #f7f8fa;       /* fonds de cartes, de code */
+  --wx-color-border: #ccc;           /* bordures de tableau */
+
+  /* tailles */
+  --wx-title-size: 5vw;              /* titre de slide (h2) */
+  --wx-cover-title-size: 6.5vw;      /* titre de couverture (h1) */
+  --wx-text-size: 2vw;               /* texte courant */
+  --wx-list-size: 2.3vw;             /* listes des slides `slide-text` */
+  --wx-list-compact-size: 2vw;       /* listes des slides `slide-text compact` */
+  --wx-quote-size: 4vw;              /* citations `quote` */
+  --wx-margin-x: 3vw;                /* marge gauche des titres */
+  --wx-schema-height: 74vh;          /* hauteur maximale de l'image des slides `schema` (largeur : 96vw) */
+  --wx-schema-notitle-height: 88vh;  /* idem pour une slide `schema no-title` (pas de titre au-dessus) */
+
+  /* couverture (templates/cover) */
+  --wx-cover-top: 16vh;              /* distance du haut de l'écran au titre */
+  --wx-cover-text-size: 2vw;         /* sous-titre, ligne speaker */
+  --wx-cover-logo-height: 45vh;      /* hauteur max du logo de conférence */
+
+  /* intercalaire photo (templates/photo) */
+  --wx-photo-title-size: 7.5vw;
+  --wx-photo-title-big-size: 13vw;   /* modificateur title-right */
+
+  /* slide de fin (slides/end.md) */
+  --wx-qrcode-size: 18vw;
+  --wx-thanks-img-height: 32vh;
+
+  /* footer (plugins/footer) */
+  --wx-footer-bottom: 1.5vh;         /* distance au bas de l'écran */
+  --wx-footer-height: 4vh;
+  --wx-footer-size: .9vw;            /* taille de @wildagsx */
+  --wx-footer-ovhcloud-height: 2.4vh;
+  --wx-footer-conf-height: 4vh;
+
+  /* variables SliDesk */
+  --sd-heading1-size: var(--wx-cover-title-size);
+  --sd-heading1-line-height: 1;
+  --sd-heading2-size: var(--wx-title-size);
+  --sd-heading2-line-height: 1;
+  --sd-text-size: var(--wx-text-size);
+  --sd-text-line-height: 1.2;
+  --sd-background-color: var(--wx-color-bg);
+  --sd-heading-color: var(--wx-color-text);
+  --sd-text-color: var(--wx-color-text);
+  --sd-primary-color: var(--wx-color-primary);
+}
+
+/* ---- 2. Polices -------------------------------------------------------- */
+@font-face { font-family: Amatic; src: url(fonts/Amatic_SC/AmaticSC-Bold.ttf); }
+@font-face { font-family: Montserrat; src: url(fonts/Montserrat/Montserrat-VariableFont_wght.ttf); font-style: normal; }
+@font-face { font-family: Montserrat; src: url(fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf); font-style: italic; }
+
+* { font-family: var(--wx-font-text); }
+h1, h2, h3 { font-family: var(--wx-font-title); }
+
+/* ---- 3. Classes de slides ---------------------------------------------- */
+
+/* slide-text : titre à gauche, liste sans puces (l'emoji sert de puce), images flottantes */
+.slide-text { display: block; }
+.slide-text h2 { text-align: left; margin: 0 0 5rem var(--wx-margin-x); }
+.slide-text ul { margin: 2rem 2rem 2rem var(--wx-margin-x); padding: 0; width: 80%; font-size: var(--wx-list-size); }
+.slide-text.wide ul { width: calc(100% - 2 * var(--wx-margin-x)); } /* wide : liste pleine largeur (slide sans image flottante) */
+.slide-text.compact ul { font-size: var(--wx-list-compact-size); } /* compact : liste longue (liens, références) */
+.slide-text.compact ul li { line-height: 1.3em; margin-bottom: 1.4vh; }
+.slide-text ul li { list-style: none; line-height: 1.5em; margin-bottom: 1.6vh; text-align: left; }
+.slide-text ul ul { margin: 1vh 0 1.5vh 4vw; width: auto; font-size: 0.85em; }
+.slide-text ul ul li { margin-bottom: 0.8vh; }
+.slide-text p { text-align: left; line-height: 1.6em; margin-left: var(--wx-margin-x); }
+.slide-text .twitter { color: var(--wx-color-primary); }
+
+/* quote : citation centrée, en police de titre ; ~~mot~~ pour barrer ; le titre (h2) n'est pas affiché */
+.quote { justify-content: center; }
+.quote h2 { display: none; }
+.quote p, .quote blockquote { font-family: var(--wx-font-title); font-size: var(--wx-quote-size); line-height: 1.2; text-align: center; width: 90vw; margin: 0 auto; }
+.quote p *, .quote blockquote * { font-family: var(--wx-font-title); }
+.quote del { text-decoration-thickness: 0.08em; }
+
+/* schema : une image sous le titre, la plus grande possible, centrée entre le titre et le footer ;
+   un crédit (<p class="credit">) juste dessous, aligné sur le bord droit de l'image.
+   Grille : titre sur toute la largeur, image et crédit dans la colonne centrale (largeur de l'image). */
+.schema {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: auto 1fr auto auto 1fr;
+  padding-top: 2vh;
+  padding-bottom: calc(var(--wx-footer-bottom) + var(--wx-footer-height));
+}
+.schema h2 { grid-row: 1; grid-column: 1 / -1; justify-self: start; margin: 0 0 1vh var(--wx-margin-x); }
+.schema .sd-img, .schema > img, .schema > p:has(> img:only-child) { grid-row: 3; grid-column: 2; max-width: none; margin: 0; } /* !image ou <img> HTML */
+.schema img { display: block; width: 96vw; height: auto; max-height: var(--wx-schema-height); object-fit: contain; } /* pleine largeur, agrandit aussi une petite image */
+.sd-slide.schema .credit { grid-row: 4; grid-column: 2; justify-self: end; margin: 0.5vh 0 0; }
+.sd-slide.schema.no-title { grid-template-rows: 0 1fr auto auto 1fr; padding-top: 0; }
+.sd-slide.schema.no-title img { max-height: var(--wx-schema-notitle-height); }
+
+/* credit : crédit d'une image hors template photo (<p class="credit">© …</p>), petit, sous l'image, à droite */
+.sd-slide .credit { align-self: flex-end; margin: 0.5vh var(--wx-margin-x) 0 0; font-size: 0.8vw; color: var(--wx-color-muted); }
+.sd-slide .credit a { color: inherit; }
+
+/* table : titre à gauche, tableau / code / texte pleine largeur */
+.table { justify-content: flex-start; padding-top: 2vh; }
+.table h2 { align-self: flex-start; margin: 0 0 3vh var(--wx-margin-x); }
+.table table { font-size: 1.35vw; border-collapse: collapse; width: 94vw; }
+.table th, .table td { border: 1px solid var(--wx-color-border); padding: 0.5vh 0.8vw; text-align: left; vertical-align: top; }
+.table th { background: var(--wx-color-surface); }
+.table tr:empty { display: none; } /* le rendu markdown laisse un <tr> vide en fin de tableau */
+.table pre { font-size: 1.5vw; text-align: left; background: var(--wx-color-surface); padding: 2vh 2vw; border-radius: 12px; width: 90vw; }
+.table p { text-align: left; width: 94vw; font-size: 1.6vw; }
+.table ul { text-align: left; width: 94vw; font-size: 1.5vw; }
+
+/* cards : bandeau .formula puis une rangée de .card ; couleur d'une carte par --wx-card-color */
+.cards { justify-content: flex-start; padding-top: 2vh; }
+.cards h2 { align-self: flex-start; margin: 0 0 2vh var(--wx-margin-x); }
+.formula { display: flex; align-items: center; justify-content: center; gap: 1.2vw; margin: 1vh 0 4vh; font-size: 3vw; font-weight: 700; }
+.formula .term { padding: 0.6vh 1.6vw; border-radius: 1vw; color: #fff; background: var(--wx-card-color, #222); }
+.formula .op { color: var(--wx-color-muted); font-weight: 400; }
+.cards-row { display: flex; gap: 2vw; width: 94vw; align-items: stretch; }
+.card { flex: 1; border-radius: 1.2vw; padding: 2vh 1.6vw 2.5vh; background: var(--wx-color-surface); border-top: 0.8vh solid var(--wx-card-color, var(--wx-color-muted)); text-align: left; }
+.card h3 { font-size: 3.8vw; margin: 0 0 0.8vh; text-align: left; }
+.card .rule { font-size: 1.65vw; color: #444; margin: 0 0 1.6vh; text-align: left; line-height: 1.3; }
+.card ul { margin: 0; padding-left: 1.4vw; font-size: 1.6vw; line-height: 1.6; }
+.card li { text-align: left; }
+.card .ex { margin: 2vh 0 0; font-size: 1.7vw; font-weight: 600; text-align: left; color: var(--wx-card-color, var(--wx-color-text)); }
+.cards .note { width: 94vw; margin-top: 4vh; font-size: 1.55vw; color: #555; text-align: left; }
+.cards .note code { font-size: 1.3vw; background: #eef1f5; padding: 0.2vh 0.4vw; border-radius: 0.4vw; }
+
+/* thanks : slide de fin (slides/end.md), grille de trois colonnes sous le titre :
+   QR codes Slides (à gauche) et Code source (à droite) en haut, bloc .qr-bottom (Feedback, image .thanks-img dessous)
+   au centre, calé en bas au-dessus du footer. Le template @gouz/split (.[#split thanks]) reste utilisable. */
+.thanks:has(.qr-row) {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  padding-top: 2vh;
+  padding-bottom: calc(var(--wx-footer-bottom) + var(--wx-footer-height) + 1vh);
+}
+.thanks:has(.qr-row) h2 { grid-row: 1; grid-column: 1 / -1; justify-self: center; margin: 0 0 1vh; }
+.thanks .qr-row:not(.qr-bottom) { display: contents; }
+.thanks .qr-row:not(.qr-bottom) > .qr:first-child { grid-row: 2; grid-column: 1; align-self: start; }
+.thanks .qr-row:not(.qr-bottom) > .qr:last-child { grid-row: 2; grid-column: 3; align-self: start; }
+.thanks .qr-row.qr-bottom { grid-row: 2; grid-column: 2; align-self: end; display: flex; flex-direction: column; align-items: center; gap: 1.5vh; }
+.thanks .qr { display: flex; flex-direction: column; align-items: center; font-size: 1.5vw; }
+.thanks .qr .sd-qrcode { width: var(--wx-qrcode-size); }
+.thanks .qr p { margin: 1vh 0 0; text-align: center; }
+.thanks .qr p + p { margin-top: 0.3vh; font-size: 0.75em; }
+.thanks .thanks-img { display: block; height: var(--wx-thanks-img-height); width: auto; }
+.thanks .split { margin-top: 2vh; }
+.thanks .split > div { font-size: 1.6vw; }
+.thanks .split p { text-align: center; }
+
+/* no-title : modificateur qui masque le titre (il reste dans la vue speaker) ; le contenu est centré verticalement */
+.sd-slide.no-title h2 { display: none; }
+.sd-slide.no-title { justify-content: center; padding-top: 0; }
+
+/* ---- 4. Surcharges des addons du hub (ne jamais modifier plugins/@gouz__*) ---- */
+/* @gouz/number : numéro de slide en haut à gauche (le crédit photo est en haut à droite) */
+footer#numslide { top: 1.5vh; left: 1.5vw; bottom: auto; right: auto; font-size: 0.8vw; line-height: 1; font-family: var(--wx-font-text); color: var(--wx-color-text); opacity: .85; z-index: 11; }
+.sd-slide.dark.sd-current ~ footer#numslide { color: var(--wx-color-on-dark); }
+/* @gouz/progress : barre fine en bas, couleur primaire */
+div#sd-progress { height: 0.5vh; }
+div#sd-progress .sd-progression { height: 0.5vh; border-color: #d0d6de; }
+.sd-slide.dark.sd-current ~ #sd-progress .sd-progression { border-color: rgba(255,255,255,.4); }

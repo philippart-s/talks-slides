@@ -2,6 +2,7 @@
 
 ## Dev containers
 
+  - [AFUP Tours 2026](./dev-containers/afup-tours-2026/)
   - [DevDay 2026](./dev-containers/devday-2026/)
 
 ## AI as lib

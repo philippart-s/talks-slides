@@ -15,6 +15,10 @@ on:
         description: "Repo du talk (philippart-s/<repo>), ex. dev-containers-talk-slides"
         type: string
         required: true
+      talk-ref:
+        description: "Référence du talk : tag (ex. devday-2026.1), branche ou SHA complet ; vide = branche par défaut"
+        type: string
+        default: ""
       talk:
         description: "Dossier du talk dans talks-slides, ex. dev-containers"
         type: string
@@ -77,6 +81,7 @@ jobs:
       EDITION_LABEL: ${{ inputs.edition-label }}
       LANGS: ${{ inputs.langs }}
       SLIDESK_VERSION: ${{ inputs.slidesk-version }}
+      TALK_REF: ${{ inputs.talk-ref }}
       THEME_REF: ${{ inputs.theme-ref }}
       PDF: ${{ inputs.pdf }}
       OUT: ${{ github.workspace }}/out
@@ -89,14 +94,20 @@ jobs:
           [[ "$TALK" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "::error::talk « $TALK » : minuscules, chiffres et tirets"; exit 1; }
           [[ "$EDITION" =~ ^[a-z0-9][a-z0-9-]*$ ]] || { echo "::error::edition « $EDITION » : minuscules, chiffres et tirets"; exit 1; }
           for lang in $LANGS; do [[ "$lang" =~ ^[a-z]{2}$ ]] || { echo "::error::langue « $lang » invalide"; exit 1; }; done
+          [[ -z "$TALK_REF" || "$TALK_REF" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]*$ ]] || { echo "::error::talk-ref « $TALK_REF » invalide"; exit 1; }
           [[ -z "$THEME_REF" || "$THEME_REF" =~ ^[A-Za-z0-9][A-Za-z0-9._/-]*$ ]] || { echo "::error::theme-ref « $THEME_REF » invalide"; exit 1; }
 
       - name: Récupérer le talk
         uses: actions/checkout@v7
         with:
           repository: ${{ env.OWNER }}/${{ inputs.repo }}
+          ref: ${{ inputs.talk-ref }}   # vide : branche par défaut
           token: ${{ secrets.TALKS_PUBLISH_TOKEN }}
           path: talk
+
+      - name: Version du talk
+        run: |
+          echo "Talk ${OWNER}/${REPO} : ${TALK_REF:-branche par défaut} ($(git -C talk rev-parse --short HEAD))" >> "$GITHUB_STEP_SUMMARY"
 
       - name: Installer SliDesk (${{ inputs.slidesk-version }})
         run: |

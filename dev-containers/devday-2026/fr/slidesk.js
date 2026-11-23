@@ -3,9 +3,9 @@ window.slidesk = {
   slides: [],
   animationTimer: 300,
   onSlideChange: () => {
+try { window.slidesk.prepareSteps(); } catch (e) { console.error("plugin @gouz__steps:", e); }
 try { window.slidesk.progressActive(); } catch (e) { console.error("plugin @gouz__progress:", e); }
 try { window.slidesk.plugin_number(); } catch (e) { console.error("plugin @gouz__number:", e); }
-try { window.slidesk.prepareSteps(); } catch (e) { console.error("plugin @gouz__steps:", e); }
   },
   env: {"PLUGIN_NUMBER_FORMAT":"%n","CONF_NAME":"DevDay","SLIDES_URL":"https://ovh.to/devday-2026-slides","FEEDBACK_URL":"https://ovh.to/devday-2026-feedback","SOURCE_URL":"https://ovh.to/dev-containers-sources","slidesk":{"TITLE":"Dev containers — Stéphane Philippart (@wildagsx)","WIDTH":1920,"deployed":true}},
   lang: "fr",
